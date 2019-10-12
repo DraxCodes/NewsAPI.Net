@@ -1,6 +1,6 @@
 ﻿namespace NewsAPI.Entities.Enums
 {
-    public enum StatusType
+    public enum ResponseStatus
     {
         Ok,
         Error

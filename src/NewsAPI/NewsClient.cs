@@ -2,6 +2,7 @@
 using NewsAPI.Entities.Enums;
 using Newtonsoft.Json;
 using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -24,10 +25,12 @@ namespace NewsAPI
             _httpClient.DefaultRequestHeaders.Add("x-api-key", apiKey);
         }
 
-        public async Task<NewsResponse> FetchNews(NewsRequest request)
+        public async Task<NewsResult> FetchNews(NewsRequest request)
         {
             var query = CreateQueryFromRequest(request);
-            return await SendRequest(query);
+            var response = await SendRequest(query);
+
+            return GetResult(response);
         }
 
         private string CreateQueryFromRequest(NewsRequest request)
@@ -92,6 +95,22 @@ namespace NewsAPI
             }
 
             return formattedSort;
+        }
+
+        private NewsResult GetResult(NewsResponse newsResponse)
+        {
+            var result = new NewsResult();
+
+            if (newsResponse.Status != ResponseStatus.Ok)
+            {
+                result.Error = newsResponse.ErrorCode;
+                return result;
+            }
+
+            result.Articles = newsResponse.NewsArticles;
+            result.TotalResults = newsResponse.NewsArticles.Count();
+
+            return result;
         }
 
         private async Task<NewsResponse> SendRequest(string query)

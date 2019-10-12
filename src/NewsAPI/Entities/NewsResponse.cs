@@ -6,9 +6,9 @@ namespace NewsAPI.Entities
 {
     public sealed class NewsResponse
     {
-        public StatusType Status { get; set; }
+        public ResponseStatus Status { get; set; }
         
-        public ErrorType? Code { get; set; }
+        public ErrorType? ErrorCode { get; set; }
         
         public string Message { get; set; }
         
