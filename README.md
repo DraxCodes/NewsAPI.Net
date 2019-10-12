@@ -1,2 +1,3 @@
-# NewsAPI.Net
-An asyncronous wrapper for newsapi.org
+<p align="center">
+  <img src="https://i.imgur.com/E7bCvKj.png" />
+</p>
