@@ -24,10 +24,10 @@ namespace NewsAPI
             _httpClient.DefaultRequestHeaders.Add("x-api-key", apiKey);
         }
 
-        public async Task<NewsResult> FetchNews(NewsRequest request)
+        public async Task<NewsResult> FetchNewsAsync(NewsRequest request)
         {
             var query = CreateQueryFromRequest(request);
-            var response = await SendRequest(query);
+            var response = await SendRequestAsync(query);
 
             return GetResult(response);
         }
@@ -112,7 +112,7 @@ namespace NewsAPI
             return result;
         }
 
-        private async Task<NewsResponse> SendRequest(string query)
+        private async Task<NewsResponse> SendRequestAsync(string query)
         {
             var httpRequest = new HttpRequestMessage(HttpMethod.Get, query);
             var response = await _httpClient.SendAsync(httpRequest);

@@ -14,7 +14,7 @@ var newsClient = new NewsClient("API_Key Here");
 var request = new NewsRequest(RequestType.Everything, "Arrow", SortType.PublishedDate);
 
 //Send the request (this return a NewsResult)
-var result = await newsClient.FetchNews(request);
+var result = await newsClient.FetchNewsAsync(request);
 
 //You will now have a result, of which you will want to check the status.
 if (result.ResponseStatus != ResponseStatus.Ok)
