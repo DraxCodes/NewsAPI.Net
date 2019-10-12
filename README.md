@@ -33,22 +33,15 @@ else
 }
 ```
 
-You are also able to pass the client into a Dependency Injection container. Currently the only way to do this is to simply create an instance of the NewsClient and pass that instance into your DI container. After which you would be able to request it, using something such as constructor injection, by requesting a `NewsClient`.
+You can also add the NewsClient easily to your Dependency Injection Container using the following extension method.
 
-Example ***(Note: this will soon be depricated in favor of an Extension method on the IServiceProvider).***
-
+ℹ ***Please Note that is is an extension method upon the type IServiceCollection***
 ```cs
 public class Foo
 {
-    private NewsClient _newsClient;
-
-    public Foo()
-    {
-        _newsClient = new NewsClient("API_KEY_HERE");
-    }
-
     public void SetupServices()
     {
-        services.AddSingleton(_newsClient);
+        serviceCollection.UseNewsAPI("YOU_API_KEY_HERE");
     }
 }
+```
