@@ -18,8 +18,8 @@ namespace NewsAPI.XUnitTests
         [Fact]
         public async Task NewsResponse_NotNull()
         {
-            var request = new NewsRequest(RequestType.Everything, "Arrow", SortType.PublishedDate);
             var result = await _newsClient.FetchNewsAsync(request);
+            var request = new EverythingRequest("Arrow", SortType.PublishedDate);
 
             foreach (var article in result.Articles)
             {
