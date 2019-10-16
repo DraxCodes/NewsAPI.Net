@@ -24,7 +24,7 @@ namespace NewsAPI
             _httpClient.DefaultRequestHeaders.Add("x-api-key", apiKey);
         }
 
-        public async Task<NewsResult> FetchNewsAsync(NewsRequest request)
+        public async Task<NewsResult> FetchNewsAsync(EverythingRequest request)
         {
             var query = CreateQueryFromRequest(request);
             var response = await SendRequestAsync(query);
@@ -32,7 +32,7 @@ namespace NewsAPI
             return GetResult(response);
         }
 
-        private string CreateQueryFromRequest(NewsRequest request)
+        private string CreateQueryFromRequest(EverythingRequest request)
         {
             var url = Constants.BaseUrl;
 
@@ -47,7 +47,7 @@ namespace NewsAPI
             }
         }
 
-        private string CreateAllNewsUrl(NewsRequest request, string url)
+        private string CreateAllNewsUrl(EverythingRequest request, string url)
         {
             url += "everything?";
             url += $"q={request.Query}";
@@ -57,15 +57,14 @@ namespace NewsAPI
             return url.ToString();
         }
 
-        private string CreateTopHeadlinesUrl(NewsRequest request, string url)
+        private string CreateTopHeadlinesUrl(EverythingRequest request, string url)
         {
             url += "top-headlines?";
-
 
             return url.ToString();
         }
 
-        private string FormattedDates(NewsRequest request)
+        private string FormattedDates(EverythingRequest request)
         {
             string formattedDate = "";
             if (request.FromDate != null) { formattedDate += string.Format("&from={0:s}", request.FromDate); }
