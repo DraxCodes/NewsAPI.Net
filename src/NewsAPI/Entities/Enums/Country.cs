@@ -4,6 +4,7 @@
     // Ordered alphabetically by their 2-letter ISO 3166-1 code (see CountryExtension.cs)
     public enum Country
     {
+        None,
         UnitedArabEmirates,
         Argentina,
         Austria,

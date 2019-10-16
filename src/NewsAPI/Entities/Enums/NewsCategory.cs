@@ -2,6 +2,7 @@
 {
     public enum NewsCategory
     {
+        None,
         Business,
         Entertainment,
         General,
