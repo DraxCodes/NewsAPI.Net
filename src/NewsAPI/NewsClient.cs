@@ -1,5 +1,6 @@
 ﻿using NewsAPI.Entities;
 using NewsAPI.Entities.Enums;
+using NewsAPI.Extensions;
 using Newtonsoft.Json;
 using System;
 using System.Linq;
@@ -24,30 +25,27 @@ namespace NewsAPI
             _httpClient.DefaultRequestHeaders.Add("x-api-key", apiKey);
         }
 
-        public async Task<NewsResult> FetchNewsAsync(NewsRequest request)
+        public async Task<NewsResult> FetchNewsAsync(EverythingRequest request)
         {
-            var query = CreateQueryFromRequest(request);
+            var baseUrl = Constants.BaseUrl;
+            var query = CreateUrl(request, baseUrl);
+
             var response = await SendRequestAsync(query);
 
             return GetResult(response);
         }
 
-        private string CreateQueryFromRequest(NewsRequest request)
+        public async Task<NewsResult> FetchNewsAsync(TopHeadlinesRequest request)
         {
-            var url = Constants.BaseUrl;
+            var baseUrl = Constants.BaseUrl;
+            var query = CreateUrl(request, baseUrl);
 
-            switch (request.RequestType)
-            {
-                case RequestType.Everything:
-                    return CreateAllNewsUrl(request, url);
-                case RequestType.TopHeadline:
-                    return CreateTopHeadlinesUrl(request, url);
-                default:
-                    throw new FormatException("Error parsing NewsRequest");
-            }
+            var response = await SendRequestAsync(query);
+
+            return GetResult(response);
         }
 
-        private string CreateAllNewsUrl(NewsRequest request, string url)
+        private string CreateUrl(EverythingRequest request, string url)
         {
             url += "everything?";
             url += $"q={request.Query}";
@@ -57,15 +55,17 @@ namespace NewsAPI
             return url.ToString();
         }
 
-        private string CreateTopHeadlinesUrl(NewsRequest request, string url)
+        private string CreateUrl(TopHeadlinesRequest request, string url)
         {
             url += "top-headlines?";
-
-
+            url += $"q={request.Query}";
+            url += FormattedCountry(request.Country);
+            url += FormattedCategory(request.Category);
+            
             return url.ToString();
         }
 
-        private string FormattedDates(NewsRequest request)
+        private string FormattedDates(EverythingRequest request)
         {
             string formattedDate = "";
             if (request.FromDate != null) { formattedDate += string.Format("&from={0:s}", request.FromDate); }
@@ -76,25 +76,25 @@ namespace NewsAPI
 
         private string FormattedSorting(SortType sortType)
         {
-            string formattedSort = "&sortBy=";
-
             switch (sortType)
             {
-                case SortType.Popularity:
-                    formattedSort += "popularity";
-                    break;
-                case SortType.PublishedDate:
-                    formattedSort += "publishedAt";
-                    break;
-                case SortType.Relevancy:
-                    formattedSort += "relevancy";
-                    break;
-                default:
-                    throw new FormatException("Error parsing SortType");
-            }
+                case SortType.Popularity:       return "&sortBy=popularity";
+                case SortType.PublishedDate:    return "&sortBy=publishedAt";
+                case SortType.Relevancy:        return "&sortBy=relevancy";
 
-            return formattedSort;
+                default: throw new FormatException("Error parsing SortType");
+            }
         }
+        
+        private string FormattedCountry(Country country)
+            => country is Country.None 
+                ? string.Empty 
+                : $"&country={country.GetIsoAlpha2Code()}";
+
+        private string FormattedCategory(NewsCategory category)
+            => category is NewsCategory.None
+                ? string.Empty 
+                : $"&category={category.ToString().ToLowerInvariant()}";
 
         private NewsResult GetResult(NewsResponse newsResponse)
         {

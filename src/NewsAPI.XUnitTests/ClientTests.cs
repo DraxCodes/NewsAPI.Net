@@ -16,9 +16,27 @@ namespace NewsAPI.XUnitTests
         }
 
         [Fact]
-        public async Task NewsResponse_NotNull()
+        public async Task NewsResponse_EverythingRequest_NotNull()
         {
-            var request = new NewsRequest(RequestType.Everything, "Arrow", SortType.PublishedDate);
+            var request = new EverythingRequest("Arrow", SortType.PublishedDate);
+            var result = await _newsClient.FetchNewsAsync(request);
+
+            foreach (var article in result.Articles)
+            {
+                Console.WriteLine(article.Title);
+                Console.WriteLine(article.Description);
+                Console.WriteLine(article.Author);
+                Console.WriteLine(article.Source.Name);
+            }
+
+            Assert.Equal(ResponseStatus.Ok, result.ResponseStatus);
+            Assert.NotNull(result.Articles);
+        }
+
+        [Fact]
+        public async Task NewsResponse_TopHeadlinesRequest_NotNull()
+        {
+            var request = new TopHeadlinesRequest("AI", NewsCategory.Technology);
             var result = await _newsClient.FetchNewsAsync(request);
 
             foreach (var article in result.Articles)
