@@ -24,6 +24,7 @@ var request = new AllNewsRequest("Arrow", SortType.PublishedDate, DateTime.UtcNo
 ### Using those requests.
 ```cs
 //Initialise a NewClient & pass in your APIKey
+//Get the NewsClient from your IOC Container if you are using one.
 var newsClient = new NewsClient("API_Key Here");
 
 //Send the request you created (as shown above)
