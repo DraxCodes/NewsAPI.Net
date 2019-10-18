@@ -83,5 +83,24 @@ namespace NewsAPI.XUnitTests
             Assert.True(hasABCNewsSource);
             Assert.True(hasBBCNewsSource);
         }
+
+        [Fact]
+        public async Task NewsResponse_FetchTopNewsFromSourceString_ShouldThrowIfInvalidSource()
+        {
+            var exception = await Record.ExceptionAsync(async () => await _newsClient.FetchNewsFromSource("buzzfeed"));
+            Assert.NotNull(exception);
+        }
+
+        [Fact]
+        public async Task NewsResponse_FetchTopNewsFromSourceString()
+        {
+            var result = await _newsClient.FetchNewsFromSource("buzzfeed");
+            var exception = await Record.ExceptionAsync(async () => await _newsClient.FetchNewsFromSource("buzzfeed"));
+
+            bool hasBuzzfeedNewsSource = result.Articles.Any(a => a.Source.Name == "Buzzfeed");
+
+            Assert.Null(exception);
+            Assert.True(hasBuzzfeedNewsSource);
+        }
     }
 }

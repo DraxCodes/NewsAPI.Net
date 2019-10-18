@@ -2,6 +2,7 @@
 using NewsAPI.Entities.Enums;
 using NewsAPI.Helpers;
 using Newtonsoft.Json;
+using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -66,10 +67,20 @@ namespace NewsAPI
             return GetResult(response);
         }
 
-        //public Task<NewsResult> FetchNewsFromSource(string source)
-        //{
-        //    throw new System.NotImplementedException();
-        //}
+        public async Task<NewsResult> FetchNewsFromSource(string requestSources)
+        {
+            var baseUrl = Constants.BaseUrl;
+            var query = NewsSourceFormatter.FormatRequestSourceUrl(requestSources, baseUrl);
+
+            var response = await SendRequestAsync(query);
+
+            if (response.Status is ResponseStatus.Error)
+            {
+                throw new NotSupportedException("The entered request news sources don't seem to be valid. If you have checked the source and it is valid, please open an issue.");
+            }
+
+            return GetResult(response);
+        }
 
         private NewsResult GetResult(NewsResponse newsResponse)
         {
