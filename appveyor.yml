@@ -4,11 +4,11 @@ clone_folder: C:\Projects\NewsAPI.Net
 skip_commits:
   message: /Update/
 before_build:
-- cmd: dotnet restore
+- cmd: dotnet restore src\NewsAPI\NewsAPI.csproj
 build:
   verbosity: minimal
 after_build:
-- cmd: dotnet build
+- cmd: dotnet build src\NewsAPI\NewsAPI.csproj
 artifacts:
 - path: '**\*.nupkg'
   name: NewsAPI.Net
