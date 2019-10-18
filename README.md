@@ -81,7 +81,7 @@ public class Foo
 {
     public void SetupServices()
     {
-        serviceCollection.UseNewsAPI("YOU_API_KEY_HERE");
+        serviceCollection.UseNewsAPI("YOUR_API_KEY_HERE");
     }
 }
 ```
