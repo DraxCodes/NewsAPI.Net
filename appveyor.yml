@@ -1,5 +1,5 @@
 version: NewsAPI.Net-{build}
-image: Visual Studio 2017 Preview
+image: Visual Studio 2019
 clone_folder: C:\Projects\NewsAPI.Net
 skip_commits:
   message: /Update/
