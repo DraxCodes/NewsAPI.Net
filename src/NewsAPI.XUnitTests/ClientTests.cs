@@ -8,17 +8,17 @@ namespace NewsAPI.XUnitTests
 {
     public class ClientTests
     {
-        private readonly NewsClient _newsClient;
+        private readonly INewsClient _newsClient;
 
         public ClientTests()
         {
-            _newsClient = new NewsClient("364365705e724fc9a5f385b9e24f487e");
+            _newsClient = new NewsClient("API_KEY_HERE_FOR_TESTING");
         }
 
         [Fact]
         public async Task NewsResponse_EverythingRequest_NotNull()
         {
-            var request = new EverythingRequest("Arrow", SortType.PublishedDate);
+            var request = new AllNewsRequest("Arrow", SortType.PublishedDate);
             var result = await _newsClient.FetchNewsAsync(request);
 
             foreach (var article in result.Articles)

@@ -2,7 +2,7 @@
 
 namespace NewsAPI.Extensions
 {
-    public static class ServiceExntesion
+    public static class ServiceExtension
     {
         /// <summary>
         /// Add the NewsClient to your DI Container.

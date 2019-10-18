@@ -1,8 +1,7 @@
 ﻿using NewsAPI.Entities;
 using NewsAPI.Entities.Enums;
-using NewsAPI.Extensions;
+using NewsAPI.Helpers;
 using Newtonsoft.Json;
-using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -10,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace NewsAPI
 {
-    public class NewsClient
+    public class NewsClient : INewsClient
     {
         private readonly HttpClient _httpClient;
 
@@ -25,10 +24,10 @@ namespace NewsAPI
             _httpClient.DefaultRequestHeaders.Add("x-api-key", apiKey);
         }
 
-        public async Task<NewsResult> FetchNewsAsync(EverythingRequest request)
+        public async Task<NewsResult> FetchNewsAsync(AllNewsRequest request)
         {
             var baseUrl = Constants.BaseUrl;
-            var query = CreateUrl(request, baseUrl);
+            var query = RequestFormat.CreateUrl(request, baseUrl);
 
             var response = await SendRequestAsync(query);
 
@@ -38,63 +37,12 @@ namespace NewsAPI
         public async Task<NewsResult> FetchNewsAsync(TopHeadlinesRequest request)
         {
             var baseUrl = Constants.BaseUrl;
-            var query = CreateUrl(request, baseUrl);
+            var query = RequestFormat.CreateUrl(request, baseUrl);
 
             var response = await SendRequestAsync(query);
 
             return GetResult(response);
         }
-
-        private string CreateUrl(EverythingRequest request, string url)
-        {
-            url += "everything?";
-            url += $"q={request.Query}";
-            url += FormattedDates(request);
-            url += FormattedSorting(request.SortType);
-
-            return url.ToString();
-        }
-
-        private string CreateUrl(TopHeadlinesRequest request, string url)
-        {
-            url += "top-headlines?";
-            url += $"q={request.Query}";
-            url += FormattedCountry(request.Country);
-            url += FormattedCategory(request.Category);
-            
-            return url.ToString();
-        }
-
-        private string FormattedDates(EverythingRequest request)
-        {
-            string formattedDate = "";
-            if (request.FromDate != null) { formattedDate += string.Format("&from={0:s}", request.FromDate); }
-            if (request.ToDate != null) { formattedDate += string.Format("&to={0:s}", request.ToDate); }
-
-            return formattedDate;
-        }
-
-        private string FormattedSorting(SortType sortType)
-        {
-            switch (sortType)
-            {
-                case SortType.Popularity:       return "&sortBy=popularity";
-                case SortType.PublishedDate:    return "&sortBy=publishedAt";
-                case SortType.Relevancy:        return "&sortBy=relevancy";
-
-                default: throw new FormatException("Error parsing SortType");
-            }
-        }
-        
-        private string FormattedCountry(Country country)
-            => country is Country.None 
-                ? string.Empty 
-                : $"&country={country.GetIsoAlpha2Code()}";
-
-        private string FormattedCategory(NewsCategory category)
-            => category is NewsCategory.None
-                ? string.Empty 
-                : $"&category={category.ToString().ToLowerInvariant()}";
 
         private NewsResult GetResult(NewsResponse newsResponse)
         {

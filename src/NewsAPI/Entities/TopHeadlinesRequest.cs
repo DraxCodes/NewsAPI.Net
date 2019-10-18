@@ -2,7 +2,7 @@
 
 namespace NewsAPI.Entities
 {
-    public class TopHeadlinesRequest
+    public class TopHeadlinesRequest : IRequest
     {
         public string Query { get; private set; }
         public Country Country { get; private set; }
