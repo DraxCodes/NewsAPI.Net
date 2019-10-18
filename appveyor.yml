@@ -1,0 +1,14 @@
+version: NewsAPI.Net-{build}
+image: Visual Studio 2017 Preview
+clone_folder: C:\Projects\NewsAPI.Net
+skip_commits:
+  message: /Update/
+before_build:
+- cmd: dotnet restore
+build:
+  verbosity: minimal
+after_build:
+- cmd: dotnet build
+artifacts:
+- path: '**\*.nupkg'
+  name: NewsAPI.Net
