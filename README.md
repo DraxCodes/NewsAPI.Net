@@ -15,7 +15,8 @@ var request = new AllNewsRequest("Arrow", SortType.PublishedDate);
 var request = new AllNewsRequest("Arrow", SortType.PublishedDate, DateTime.UtcNow.AddDays(-7));
 
 //This will fetch all news regarding Arrow 
-//This request states article to be no older than 7 days and are no younger than 2.
+//This request exmample states that articles are to be:
+//No older than 7 days and no younger than 2.
 //For example if it where 10/1/2019, this would be news articles from The 3/1/2019 to 8/1/2019 
 var request = new AllNewsRequest("Arrow", SortType.PublishedDate, DateTime.UtcNow.AddDays(-7), DateTime.UtcNow.AddDays(-2));
 ```
