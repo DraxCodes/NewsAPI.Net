@@ -21,7 +21,6 @@ namespace NewsAPI.XUnitTests
         {
             var request = new AllNewsRequest("Arrow", SortType.PublishedDate);
             var result = await _newsClient.FetchNewsAsync(request);
-
             foreach (var article in result.Articles)
             {
                 Console.WriteLine(article.Title);
