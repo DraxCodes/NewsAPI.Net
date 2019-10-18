@@ -3,6 +3,17 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>NewsAPI</AssemblyName>
+    <Authors>DraxCodes</Authors>
+    <Product>NewsAPI.Net</Product>
+    <PackageId>NewsAPI.Net</PackageId>
+    <Description>An asynchronous wrapper for the Newsapi.org API.</Description>
+    <PackageProjectUrl>https://github.com/DraxCodes/NewsAPI.Net</PackageProjectUrl>
+    <PackageIconUrl>https://i.imgur.com/rvAmbNg.png</PackageIconUrl>
+    <RepositoryUrl>https://github.com/DraxCodes/NewsAPI.Net</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <PackageTags>NewsAPI, News, API, Newsapi.org</PackageTags>
+    <PackageReleaseNotes>Initial Release.</PackageReleaseNotes>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
