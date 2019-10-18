@@ -2,6 +2,26 @@
   <img src="docs/images/logo.png" />
 </p>
 
+## ℹ Add NewsAPI.Net to your project.
+
+From the NUGET CLI
+
+```cs
+PM> Install-Package News.Net -Version 1.0.0
+```
+
+From the DotNet CLI
+
+```cs
+> dotnet add package News.Net --version 1.0.0
+```
+
+Or place this line in your `.csproj` & do a `dotnet restore`.
+
+```cs
+<PackageReference Include="News.Net" Version="1.0.0" />
+```
+
 ## 🤔 How To Use
 
 ### Creating a request to send to the API.
