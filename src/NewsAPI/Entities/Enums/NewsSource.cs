@@ -1,5 +1,8 @@
 ﻿namespace NewsAPI.Entities.Enums
 {
+    /// <summary>
+    /// A News Source.
+    /// </summary>
     public enum NewsSource
     {
         ABCNews,
