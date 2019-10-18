@@ -9,6 +9,7 @@ namespace NewsAPI
         Task<NewsResult> FetchNewsAsync(AllNewsRequest request);
         Task<NewsResult> FetchNewsAsync(TopHeadlinesRequest request);
         Task<NewsResult> FetchNewsFromSource(NewsSource source);
+        Task<NewsResult> FetchNewsFromSource(NewsSource[] sources);
         //Task<NewsResult> FetchNewsFromSource(string source);
     }
 }

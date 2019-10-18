@@ -6,7 +6,7 @@ namespace NewsAPI.Helpers
 {
     internal static class NewsSourceFormatter
     {
-        internal static string FormatSourceUrl(string sources, string baseUrl)
+        internal static string FormatRequestSourceUrl(string sources, string baseUrl)
         {
             baseUrl += "top-headlines?sources=";
             baseUrl += sources;

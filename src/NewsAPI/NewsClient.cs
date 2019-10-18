@@ -48,7 +48,18 @@ namespace NewsAPI
         {
             var baseUrl = Constants.BaseUrl;
             var requestSource = NewsSourceFormatter.FormatNewsSource(source);
-            var query = NewsSourceFormatter.FormatSourceUrl(requestSource, baseUrl);
+            var query = NewsSourceFormatter.FormatRequestSourceUrl(requestSource, baseUrl);
+
+            var response = await SendRequestAsync(query);
+
+            return GetResult(response);
+        }
+
+        public async Task<NewsResult> FetchNewsFromSource(NewsSource[] sources)
+        {
+            var baseUrl = Constants.BaseUrl;
+            var requestSource = NewsSourceFormatter.FormatNewsSources(sources);
+            var query = NewsSourceFormatter.FormatRequestSourceUrl(requestSource, baseUrl);
 
             var response = await SendRequestAsync(query);
 

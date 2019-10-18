@@ -57,9 +57,31 @@ namespace NewsAPI.XUnitTests
         {
             var result = await _newsClient.FetchNewsFromSource(NewsSource.BBC);
 
-            Assert.Equal("BBC News", result.Articles.First().Source.Name);
+            bool hasBBCNewsSource = result.Articles.Any(a => a.Source.Name == "BBC News");
+
             Assert.Equal(ResponseStatus.Ok, result.ResponseStatus);
             Assert.NotNull(result.Articles);
+            Assert.True(hasBBCNewsSource);
+        }
+
+        [Fact]
+        public async Task NewsResponse_FetchTopNewsFromSources()
+        {
+            var sources = new NewsSource[] 
+            { 
+                NewsSource.ABCNews,
+                NewsSource.BBC
+            };
+
+            var result = await _newsClient.FetchNewsFromSource(sources);
+
+            bool hasABCNewsSource = result.Articles.Any(a => a.Source.Name == "ABC News");
+            bool hasBBCNewsSource = result.Articles.Any(a => a.Source.Name == "BBC News");
+
+            Assert.Equal(ResponseStatus.Ok, result.ResponseStatus);
+            Assert.NotNull(result.Articles);
+            Assert.True(hasABCNewsSource);
+            Assert.True(hasBBCNewsSource);
         }
     }
 }
