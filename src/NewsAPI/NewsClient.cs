@@ -44,6 +44,22 @@ namespace NewsAPI
             return GetResult(response);
         }
 
+        public async Task<NewsResult> FetchNewsFromSource(NewsSource source)
+        {
+            var baseUrl = Constants.BaseUrl;
+            var requestSource = NewsSourceFormatter.FormatNewsSource(source);
+            var query = NewsSourceFormatter.FormatSourceUrl(requestSource, baseUrl);
+
+            var response = await SendRequestAsync(query);
+
+            return GetResult(response);
+        }
+
+        //public Task<NewsResult> FetchNewsFromSource(string source)
+        //{
+        //    throw new System.NotImplementedException();
+        //}
+
         private NewsResult GetResult(NewsResponse newsResponse)
         {
             var result = new NewsResult();

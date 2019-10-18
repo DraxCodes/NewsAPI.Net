@@ -14,17 +14,17 @@ namespace NewsAPI.Helpers
             baseUrl += FormattedDates(request);
             baseUrl += FormattedSorting(request.SortType);
 
-            return baseUrl.ToString();
+            return baseUrl;
         }
 
-        internal static string CreateUrl(TopHeadlinesRequest request, string url)
+        internal static string CreateUrl(TopHeadlinesRequest request, string baseUrl)
         {
-            url += "top-headlines?";
-            url += $"q={request.Query}";
-            url += FormattedCountry(request.Country);
-            url += FormattedCategory(request.Category);
+            baseUrl += "top-headlines?";
+            baseUrl += $"q={request.Query}";
+            baseUrl += FormattedCountry(request.Country);
+            baseUrl += FormattedCategory(request.Category);
 
-            return url.ToString();
+            return baseUrl;
         }
 
         private static string FormattedDates(AllNewsRequest request)

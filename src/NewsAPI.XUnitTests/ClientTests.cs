@@ -1,6 +1,7 @@
 ﻿using NewsAPI.Entities;
 using NewsAPI.Entities.Enums;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -12,7 +13,7 @@ namespace NewsAPI.XUnitTests
 
         public ClientTests()
         {
-            _newsClient = new NewsClient("API_KEY_HERE_FOR_TESTING");
+            _newsClient = new NewsClient("");
         }
 
         [Fact]
@@ -47,6 +48,16 @@ namespace NewsAPI.XUnitTests
                 Console.WriteLine(article.Source.Name);
             }
 
+            Assert.Equal(ResponseStatus.Ok, result.ResponseStatus);
+            Assert.NotNull(result.Articles);
+        }
+
+        [Fact]
+        public async Task NewsResponse_FetchTopNewsFromSource()
+        {
+            var result = await _newsClient.FetchNewsFromSource(NewsSource.BBC);
+
+            Assert.Equal("BBC News", result.Articles.First().Source.Name);
             Assert.Equal(ResponseStatus.Ok, result.ResponseStatus);
             Assert.NotNull(result.Articles);
         }
