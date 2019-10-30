@@ -13,7 +13,8 @@ namespace NewsAPI.XUnitTests
 
         public ClientTests()
         {
-            _newsClient = new NewsClient("");
+            string apiKey = Environment.GetEnvironmentVariable("NEWS_API_KEY", EnvironmentVariableTarget.Machine);
+            _newsClient = new NewsClient(apiKey);
         }
 
         [Fact]
@@ -21,14 +22,6 @@ namespace NewsAPI.XUnitTests
         {
             var request = new AllNewsRequest("Arrow", SortType.PublishedDate);
             var result = await _newsClient.FetchNewsAsync(request);
-
-            foreach (var article in result.Articles)
-            {
-                Console.WriteLine(article.Title);
-                Console.WriteLine(article.Description);
-                Console.WriteLine(article.Author);
-                Console.WriteLine(article.Source.Name);
-            }
 
             Assert.Equal(ResponseStatus.Ok, result.ResponseStatus);
             Assert.NotNull(result.Articles);
@@ -39,14 +32,6 @@ namespace NewsAPI.XUnitTests
         {
             var request = new TopHeadlinesRequest("AI", NewsCategory.Technology);
             var result = await _newsClient.FetchNewsAsync(request);
-
-            foreach (var article in result.Articles)
-            {
-                Console.WriteLine(article.Title);
-                Console.WriteLine(article.Description);
-                Console.WriteLine(article.Author);
-                Console.WriteLine(article.Source.Name);
-            }
 
             Assert.Equal(ResponseStatus.Ok, result.ResponseStatus);
             Assert.NotNull(result.Articles);
@@ -87,7 +72,7 @@ namespace NewsAPI.XUnitTests
         [Fact]
         public async Task NewsResponse_FetchTopNewsFromSourceString_ShouldThrowIfInvalidSource()
         {
-            var exception = await Record.ExceptionAsync(async () => await _newsClient.FetchNewsFromSource("buzzfeed"));
+            var exception = await Record.ExceptionAsync(async () => await _newsClient.FetchNewsFromSource("aasfasfasf"));
             Assert.NotNull(exception);
         }
 
