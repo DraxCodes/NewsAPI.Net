@@ -13,7 +13,7 @@ namespace NewsAPI.XUnitTests
 
         public ClientTests()
         {
-            string apiKey = Environment.GetEnvironmentVariable("NEWS_API_KEY", EnvironmentVariableTarget.Machine);
+            string apiKey = Environment.GetEnvironmentVariable("NEWS_API_KEY");
             _newsClient = new NewsClient(apiKey);
         }
 
