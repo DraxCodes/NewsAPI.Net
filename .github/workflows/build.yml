@@ -1,0 +1,23 @@
+name: Build & Test
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
+
+    steps:
+      - uses: actions/checkout@v1
+      
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.0.100
+            
+      - name: Build with dotnet
+        run: dotnet build src/NewsAPI.Net.sln --configuration Release
+      
+      - name: Run Tests
+        run: dotnet test src/NewsAPI.XUnitTests/NewsAPI.XUnitTests.csproj
