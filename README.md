@@ -4,7 +4,7 @@
 
 ## ℹ Add NewsAPI.Net to your project.
 
-From the NUGET CLI
+From the PackageManager CLI
 
 ```cs
 PM> Install-Package News.Net -Version 1.0.0
