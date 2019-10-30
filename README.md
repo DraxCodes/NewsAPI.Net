@@ -1,5 +1,6 @@
 <p align="center">
   <img src="docs/images/logo.png" />
+  <a href="https://github.com/DraxCodes/NewsAPI.Net/actions?query=workflow%3A%22Build+%26+Test%22"><img src="https://github.com/DraxCodes/NewsAPI.Net/workflows/Build & Test/badge.svg" alt="Build status"></a>
 </p>
 
 ## ℹ Add NewsAPI.Net to your project.
